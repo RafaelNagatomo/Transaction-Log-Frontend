@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { SiTransifex } from "react-icons/si"
-import { useAuthStore } from "~/infrastructure/stores/authStore"
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { SiTransifex } from 'react-icons/si'
+import { useAuthStore } from '~/infrastructure/stores/authStore'
 import { TextField, Button, Typography, Box, Stack, Divider } from '@mui/material'
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const { login } = useAuthStore()
 
@@ -15,20 +15,17 @@ const LoginForm: React.FC = () => {
     e.preventDefault()
     try {
       await login(email, password)
-      console.error("Login successful!")
+      console.error('Login successful!')
+      navigate('/home')
     } catch (error) {
       setError('Error logging in. Check your details.')
-      console.error({Message: "Login failed", error: error})
-    } finally {
-      navigate('/home')
-      setEmail("")
-      setPassword("")
+      console.error({Message: 'Login failed', error: error})
     }
   }
 
   return (
     <Stack
-      justifyContent="center"
+      justifyContent='center'
       sx={{
         paddingX: 4,
         height: '100%',
@@ -40,7 +37,7 @@ const LoginForm: React.FC = () => {
         gap={2}
         alignItems={'center'}
       >
-        <SiTransifex size={30} color="#3435CE"/>
+        <SiTransifex size={30} color='#3435CE'/>
         <Typography fontSize={24}>
           TransferX
         </Typography>
@@ -54,7 +51,7 @@ const LoginForm: React.FC = () => {
       </Typography>
 
       <Box
-        component="form"
+        component='form'
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -63,33 +60,33 @@ const LoginForm: React.FC = () => {
         onSubmit={handleLogin}
       >
         <TextField
-          label="E-mail"
-          type="email"
-          variant="outlined"
+          label='E-mail'
+          type='email'
+          variant='outlined'
           value={email}
-          size="small"
+          size='small'
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <TextField
-          label="Senha"
-          type="password"
-          variant="outlined"
+          label='Senha'
+          type='password'
+          variant='outlined'
           value={password}
-          size="small"
+          size='small'
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         {error && (
-          <Typography color="error" align="center">
+          <Typography color='error' align='center'>
             {error}
           </Typography>
         )}
         <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="small"
+          type='submit'
+          variant='contained'
+          color='primary'
+          size='small'
         >
           Login
         </Button>
@@ -101,10 +98,10 @@ const LoginForm: React.FC = () => {
         <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
           <Typography fontSize={14}>Already have an Account?</Typography>
           <Button
-            type="submit"
-            variant="text"
-            color="primary"
-            size="small"
+            type='submit'
+            variant='text'
+            color='primary'
+            size='small'
             onClick={() => navigate('/register')}
           >
             Register
