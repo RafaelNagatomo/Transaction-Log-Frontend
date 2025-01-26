@@ -1,7 +1,7 @@
 import AuthRepositoryImpl from '~/infrastructure/repositories/AuthRepositoryImpl'
 import LoginUseCase from '../auth/LoginUserUseCase'
-import LogoutUseCase from '../auth/LogoutUseCase'
-import RegisterUseCase from '../auth/RegisterUseCase'
+import LogoutUseCase from '../auth/LogoutUserUseCase'
+import RegisterUseCase from '../auth/RegisterUserUseCase'
 
 export default class AuthService {
   private loginUseCase: LoginUseCase

@@ -17,6 +17,7 @@ const RegisterForm: React.FC = () => {
     try {
       await register(name, email, password)
       console.error('Registration successful! Please login.')
+      navigate('/login')
     } catch (error) {
       setError('Erro ao registrar. Verifique seus dados.')
       console.error({Message: 'Registration failed', error: error})

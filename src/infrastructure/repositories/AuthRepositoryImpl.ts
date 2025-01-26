@@ -10,12 +10,12 @@ export default class AuthRepositoryImpl implements IAuthRepository {
       email,
       password,
     })
+    const user = response.data
 
     return new User(
-      response.data.user.id,
-      response.data.user.name,
-      response.data.user.email,
-      response.data.token
+      user._id,
+      user.name,
+      user.email
     )
   }
 
@@ -24,8 +24,9 @@ export default class AuthRepositoryImpl implements IAuthRepository {
       email,
       password,
     })
+    const token = response.data.token
 
-    return response.data.token
+    return token
   }
 
   async logout(): Promise<void> {
