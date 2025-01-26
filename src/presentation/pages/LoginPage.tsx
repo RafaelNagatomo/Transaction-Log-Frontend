@@ -5,10 +5,10 @@ import auth_page from '~/assets/media/auth_page.jpg'
 
 const LoginPage: React.FC = () => {
   return (
-    <Grid2 container direction="row">
+    <Grid2 container direction='row'>
       <Grid2 size={8}>
         <CardMedia
-          component="img"
+          component='img'
           image={auth_page}
           alt={'auth_page_img'}
           sx={{

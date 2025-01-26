@@ -1,5 +1,5 @@
-import User from "~/domain/entities/User"
-import AuthRepository from "~/domain/repositories/IAuthRepository"
+import User from '~/domain/entities/User'
+import AuthRepository from '~/domain/repositories/IAuthRepository'
 
 export default class RegisterUseCase {
   constructor(private authRepository: AuthRepository) {}

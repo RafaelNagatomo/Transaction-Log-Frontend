@@ -1,4 +1,4 @@
-import AuthRepository from "~/domain/repositories/IAuthRepository"
+import AuthRepository from '~/domain/repositories/IAuthRepository'
 
 export default class LogoutUseCase {
   constructor(private authRepository: AuthRepository) {}
