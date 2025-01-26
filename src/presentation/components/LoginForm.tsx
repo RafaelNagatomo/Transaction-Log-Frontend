@@ -14,12 +14,15 @@ const LoginForm: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await login(email, password)
-      console.log(response)
+      await login(email, password)
       console.error("Login successful!")
     } catch (error) {
-      setError('Erro ao logar. Verifique seus dados.')
+      setError('Error logging in. Check your details.')
       console.error({Message: "Login failed", error: error})
+    } finally {
+      navigate('/home')
+      setEmail("")
+      setPassword("")
     }
   }
 

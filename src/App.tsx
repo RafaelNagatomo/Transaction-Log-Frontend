@@ -30,6 +30,10 @@ const App: React.FC = () => {
               path="/register"
               element={!isAuthenticated ? <RegisterPage /> : <Navigate to="/" />}
             />
+            <Route
+              path="/home"
+              element={!isAuthenticated ? <HomePage /> : <Navigate to="/" />}
+            />
           </Routes>
         </Router>
       </StyledThemeProvider>

@@ -20,8 +20,6 @@ export default class AuthRepositoryImpl implements IAuthRepository {
   }
 
   async login(email: string, password: string): Promise<User> {
-    console.log("email", email)
-    console.log("password", password)
     const response = await api.post("/auth/login", {
       email,
       password,
