@@ -1,6 +1,6 @@
-import { create } from "zustand"
-import AuthService from "~/application/services/AuthService"
-import User from "~/domain/entities/User"
+import { create } from 'zustand'
+import AuthService from '~/application/services/AuthService'
+import User from '~/domain/entities/User'
 
 interface AuthState {
   user: User | null
@@ -16,11 +16,11 @@ const authService = new AuthService()
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
-  isAuthenticated: false,
+  isAuthenticated: !!localStorage.getItem('authToken'),
 
   login: async (email, password) => {
-    const user = await authService.login(email, password)
-    set({ user, token: user.token, isAuthenticated: true })
+    const token = await authService.login(email, password)
+    set({ token, isAuthenticated: true })
   },
 
   register: async (name, email, password) => {

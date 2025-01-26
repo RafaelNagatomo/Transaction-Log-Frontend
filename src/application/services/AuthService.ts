@@ -1,7 +1,7 @@
-import AuthRepositoryImpl from "~/infrastructure/repositories/AuthRepositoryImpl"
-import LoginUseCase from "../auth/LoginUserUseCase"
-import LogoutUseCase from "../auth/LogoutUseCase"
-import RegisterUseCase from "../auth/RegisterUseCase"
+import AuthRepositoryImpl from '~/infrastructure/repositories/AuthRepositoryImpl'
+import LoginUseCase from '../auth/LoginUserUseCase'
+import LogoutUseCase from '../auth/LogoutUseCase'
+import RegisterUseCase from '../auth/RegisterUseCase'
 
 export default class AuthService {
   private loginUseCase: LoginUseCase
@@ -16,7 +16,9 @@ export default class AuthService {
   }
 
   async login(email: string, password: string) {
-    return this.loginUseCase.execute(email, password)
+    const token = await this.loginUseCase.execute(email, password)
+    if(token) localStorage.setItem('authToken', token)
+    return token
   }
 
   async register(name: string, email: string, password: string) {
@@ -24,6 +26,7 @@ export default class AuthService {
   }
 
   async logout() {
+    localStorage.removeItem('authToken')
     return this.logoutUseCase.execute()
   }
 }
