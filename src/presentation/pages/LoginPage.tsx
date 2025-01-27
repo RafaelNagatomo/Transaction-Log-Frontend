@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/auth/LoginForm'
 import { CardMedia, Grid2 } from '@mui/material'
 import auth_page from '~/assets/media/auth_page.jpg'
 
