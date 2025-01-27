@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
-import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
+import { useState } from 'react'
+import {
+  Paper,
+  Table,
+  TableBody,
+  TablePagination,
+  TableRow,
+  TableCell,
+  TableContainer,
+  TableHead
+} from '@mui/material'
+import Loading from '../shared/Loading'
+import TableHeaderToolbar from './TableHeaderToolbar'
+import Transaction from '~/domain/entities/Transaction'
 
 interface Column {
   id: 'description' | 'amount' | 'type' | 'status'
@@ -41,13 +45,21 @@ const columns: readonly Column[] = [
   }
 ]
 
-export default function TransactionTable() {
+interface TransactionTableProps {
+  transactions: Transaction[]
+  loading: boolean
+  onAdd: () => void
+}
+
+export default function TransactionTable({
+  transactions,
+  loading,
+  onAdd
+}: TransactionTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
-  const [loading, setLoading] = useState(true)
-  const transactions = useTransactionStore((state) => state.transactions)
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage)
   }
 
@@ -56,20 +68,19 @@ export default function TransactionTable() {
     setPage(0)
   }
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      useTransactionStore.getState().getAll()
-      setLoading(false)
-    }
-    fetchTransactions()
-  }, [])
-
   if (loading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableHeaderToolbar
+        title="Transactions"
+        filterButton
+        addButton
+        onAdd={onAdd}
+      />
+
       <TableContainer sx={{ maxHeight: 550 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

@@ -6,9 +6,9 @@ import { TextField, Button, Stack, Typography, Box, Divider } from '@mui/materia
 
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const { register } = useAuthStore()
 

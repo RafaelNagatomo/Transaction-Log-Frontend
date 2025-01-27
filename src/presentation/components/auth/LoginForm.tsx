@@ -6,8 +6,8 @@ import { TextField, Button, Typography, Box, Stack, Divider } from '@mui/materia
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const { login } = useAuthStore()
 
