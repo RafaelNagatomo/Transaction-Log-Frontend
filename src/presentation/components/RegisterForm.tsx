@@ -100,7 +100,12 @@ const RegisterForm: React.FC = () => {
           <Typography fontSize={14}>Or</Typography>
         </Divider>
 
-        <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} gap={1}>
+        <Stack
+          direction={'row'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          gap={1}
+        >
           <Typography fontSize={14}>Already have an Account?</Typography>
           <Button
             type='submit'
