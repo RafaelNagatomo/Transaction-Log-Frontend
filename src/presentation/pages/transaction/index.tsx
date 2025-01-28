@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import Transaction from '~/domain/entities/Transaction'
-import TransactionTable from '../components/transaction/TransactionTable'
-import ConfirmDeleteModal from '../components/transaction/ConfirmDeleteModal'
-import AddOrEditTransactionModal from '../components/transaction/AddOrEditTransactionModal'
+import TransactionTable from '../../components/transaction/TransactionTable'
+import ConfirmDeleteModal from '../../components/transaction/ConfirmDeleteModal'
+import AddOrEditTransactionModal from '../../components/transaction/AddOrEditTransactionModal'
 import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
-import AsideMenu from '../components/layout'
 
 const TransactionPage = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -52,7 +51,7 @@ const TransactionPage = () => {
   }, [])
 
   return (
-    <AsideMenu>
+    <>
       <Stack>
         <TransactionTable
           transactions={transactions}
@@ -78,7 +77,7 @@ const TransactionPage = () => {
         setOpenModal={setConfirmModalOpen}
         deleteOk={handleDelete}
       />
-    </AsideMenu>
+    </>
   )
 }
 

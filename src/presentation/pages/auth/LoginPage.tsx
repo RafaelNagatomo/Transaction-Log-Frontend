@@ -1,9 +1,9 @@
 import React from 'react'
-import RegisterForm from '../components/auth/RegisterForm'
+import LoginForm from '../../components/auth/LoginForm'
 import { CardMedia, Grid2 } from '@mui/material'
 import auth_page from '~/assets/media/auth_page.jpg'
 
-const RegisterPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   return (
     <Grid2 container direction='row'>
       <Grid2 size={8}>
@@ -17,10 +17,10 @@ const RegisterPage: React.FC = () => {
         />
       </Grid2>
       <Grid2 size={4}>
-        <RegisterForm />
+        <LoginForm />
       </Grid2>
     </Grid2>
   )
 }
 
-export default RegisterPage
+export default LoginPage
