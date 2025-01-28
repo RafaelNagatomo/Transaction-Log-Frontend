@@ -5,6 +5,6 @@ export default class Transaction {
     public description: string,
     public status: 'paid' | 'pending',
     public isActive?: boolean,
-    public id?: string,
+    public _id?: string,
   ) {}
 }

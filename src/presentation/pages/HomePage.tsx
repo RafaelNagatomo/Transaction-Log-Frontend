@@ -9,11 +9,25 @@ import Transaction from '~/domain/entities/Transaction'
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [editTransaction, setEditTransaction] = useState<Transaction>()
   const transactions = useTransactionStore((state) => state.transactions)
-  const addTransaction = useTransactionStore((state) => state.create)
+  const createTransaction = useTransactionStore((state) => state.create)
+  const updateTransaction = useTransactionStore((state) => state.update)
 
-  const handleAddTransaction = (newTransaction: Transaction) => {
-    addTransaction(newTransaction)
+  const handleAddOrEditTransaction = (
+    nextTransaction: Transaction,
+    edit: boolean
+  ) => {
+    if (!edit) {
+      createTransaction(nextTransaction)
+    } else {
+      updateTransaction(nextTransaction)
+    }
+  }
+
+  const handleOpenModal = async (editedTransaction: Transaction) => {
+    setEditTransaction(editedTransaction)
+    setOpenModal(true)
   }
   
   useEffect(() => {
@@ -32,13 +46,15 @@ const HomePage: React.FC = () => {
           transactions={transactions}
           loading={loading}
           onAdd={() => setOpenModal(true)}
+          onEdit={handleOpenModal}
         />
       </Stack>
 
       <AddOrEditTransactionModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        onSubmit={handleAddTransaction}
+        onSubmit={handleAddOrEditTransaction}
+        editTransaction={editTransaction}
       />
     </>
   )

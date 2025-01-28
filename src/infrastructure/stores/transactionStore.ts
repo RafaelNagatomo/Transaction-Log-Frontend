@@ -41,7 +41,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     const updated = await updateTransactionUseCase.execute(updatedTransaction)
     set((state) => ({
       transactions: state.transactions.map((t) =>
-        t.id === updatedTransaction.id ? updated! : t
+        t._id === updatedTransaction._id ? updated! : t
       ),
     }))
   },
@@ -52,7 +52,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   },
 
   getById: async (id) => {
-    const transaction = get().transactions.find((t) => t.id === id)
+    const transaction = get().transactions.find((t) => t._id === id)
     if (!transaction) {
       const fetchedTransaction = await findTransactionByIdUseCase.execute(id)
       return fetchedTransaction
@@ -63,7 +63,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   delete: async (id) => {
     await deleteTransactionUseCase.execute(id)
     set((state) => ({
-      transactions: state.transactions.filter((t) => t.id !== id),
+      transactions: state.transactions.filter((t) => t._id !== id),
     }))
   },
 }))

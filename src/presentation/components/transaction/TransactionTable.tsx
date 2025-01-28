@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import {
   Paper,
   Table,
@@ -7,41 +9,60 @@ import {
   TableRow,
   TableCell,
   TableContainer,
-  TableHead
+  TableHead,
+  IconButton
 } from '@mui/material'
 import Loading from '../shared/Loading'
 import TableHeaderToolbar from './TableHeaderToolbar'
 import Transaction from '~/domain/entities/Transaction'
 
 interface Column {
-  id: 'description' | 'amount' | 'type' | 'status'
+  id: 'description' | 'amount' | 'type' | 'status' | 'action' | 'createdAt'
   label: string
   minWidth?: number
   align?: 'right'
   format?: (value: number) => string
+  date?: (value: string) => ReactNode
 }
 
 const columns: readonly Column[] = [
   {
+    id: 'createdAt',
+    label: 'Created date',
+    minWidth: 150,
+    date: (value: string) => {
+      const [date, time] = value.split('T')
+      const formattedTime = time?.split(':').slice(0, 2).join(':')
+      return (
+        <p>{date} at {formattedTime}</p>
+      )
+    },
+  },
+  {
     id: 'type',
     label: 'Type',
-    minWidth: 170
+    minWidth: 150
   },
   {
     id: 'description',
     label: 'Description',
-    minWidth: 170
+    minWidth: 150
   },
   {
     id: 'amount',
     label: 'Amount',
-    minWidth: 100,
-    format: (value: number) => value.toLocaleString('en-US')
+    minWidth: 150,
+    format: (value: number) => '$' + value.toLocaleString('en-US')
   },
   {
     id: 'status',
     label: 'Status',
-    minWidth: 170
+    minWidth: 150
+  },
+  {
+    id: 'action',
+    label: '',
+    minWidth: 50
   }
 ]
 
@@ -49,12 +70,14 @@ interface TransactionTableProps {
   transactions: Transaction[]
   loading: boolean
   onAdd: () => void
+  onEdit?: (transaction: Transaction) => void
 }
 
 export default function TransactionTable({
   transactions,
   loading,
-  onAdd
+  onAdd,
+  onEdit
 }: TransactionTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
@@ -66,6 +89,17 @@ export default function TransactionTable({
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value)
     setPage(0)
+  }
+
+  const handleEdit = (row: Transaction) => {
+    console.log(row)
+    if(row) {
+      onEdit?.(row)
+    }
+  }
+
+  const handleDelete = (row: Transaction) => {
+    console.log('Delete clicked', row)
   }
 
   if (loading) {
@@ -101,14 +135,27 @@ export default function TransactionTable({
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               ?.map((item) => {
                 return (
-                  <TableRow hover tabIndex={-1} key={item.id}>
+                  <TableRow hover tabIndex={-1} key={item._id}>
                     {columns.map((column) => {
-                      const value = item[column.id]
+                      const value = item[column.id as keyof Omit<Transaction, 'action'>]
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={`${item._id}-${column.id}`} align={column.align}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
+                            : column.date && typeof value === 'string'
+                            ? column.date(value)
                             : value}
+
+                          {column.id === 'action' && (
+                            <>
+                              <IconButton onClick={() => handleEdit(item)} aria-label="edit">
+                                <EditIcon fontSize='small' color='success'/>
+                              </IconButton>
+                              <IconButton onClick={() => handleDelete(item)} aria-label="delete">
+                                <DeleteIcon fontSize='small' color='error' />
+                              </IconButton>
+                            </>
+                          )}
                         </TableCell>
                       )
                     })}

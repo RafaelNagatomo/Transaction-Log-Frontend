@@ -12,33 +12,37 @@ import {
   Switch,
   TextField
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Transaction from '~/domain/entities/Transaction'
 
 interface AddOrEditTransactionModalProps {
   openModal: boolean
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
-  onSubmit: (transaction: Transaction) => void
+  onSubmit: (transaction: Transaction, edit: boolean) => void
+  editTransaction: Transaction | undefined
 }
 
 export default function AddOrEditTransactionModal({
   openModal,
   setOpenModal,
-  onSubmit
+  onSubmit,
+  editTransaction
 }: AddOrEditTransactionModalProps) {
   const [paid, setPaid] = useState<boolean>(false)
   const [type, setType] = useState<string>('outcome')
+  const [description, setDescription] = useState<string | null>('')
+  const [amount, setAmount] = useState<number | null>()
+
+  function resetFields() {
+    setPaid(false)
+    setType('outcome')
+    setDescription(null)
+    setAmount(null)
+  }
 
   function handleClose() {
+    resetFields()
     setOpenModal(false)
-  }
-
-  const handlePaidChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPaid(event.target.checked)
-  }
-
-  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setType(event.target.value)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -46,16 +50,35 @@ export default function AddOrEditTransactionModal({
     const formData = new FormData(event.currentTarget)
     const formJson = Object.fromEntries((formData).entries())
 
-    const newTransaction = new Transaction(
+    const nextTransaction = new Transaction(
       type as 'income' | 'outcome',
       parseFloat(formJson.amount as string),
       formJson.description as string,
       paid ? 'paid' : 'pending'
     )
 
-    onSubmit(newTransaction)
+    if (!editTransaction) {
+      onSubmit(nextTransaction, false)
+    } else {
+      const edited = { ...nextTransaction, _id: editTransaction._id }
+      onSubmit(edited, true)
+    }
     handleClose()
   }
+
+  useEffect(() => {
+    if (editTransaction) {
+      setPaid(editTransaction.status === 'paid')
+      setType(editTransaction.type)
+      setDescription(editTransaction.description)
+      setAmount(editTransaction.amount)
+    } else {
+      setPaid(false)
+      setType('outcome')
+      setDescription(null)
+      setAmount(null)
+    }
+  }, [editTransaction])
 
   return (
     <Dialog
@@ -74,11 +97,11 @@ export default function AddOrEditTransactionModal({
         <FormControl component="fieldset" sx={{ mb: 2 }}>
           <FormLabel component="legend">Tipo de Transação</FormLabel>
           <RadioGroup
-            row
             aria-label="type"
             name="type"
             value={type}
-            onChange={handleTypeChange}
+            onChange={(e) => setType(e.target.value)}
+            row
           >
             <FormControlLabel
               value="income"
@@ -98,9 +121,11 @@ export default function AddOrEditTransactionModal({
           sx={{ marginBottom: 2 }}
           id="description"
           name="description"
+          value={description ?? null}
           label="Description"
           variant="outlined"
           size='small'
+          onChange={(e) => setDescription(e.target.value)}
           fullWidth
           required
         />
@@ -110,10 +135,12 @@ export default function AddOrEditTransactionModal({
           sx={{ marginBottom: 2 }}
           id="amount"
           name="amount"
+          value={amount ?? null}
           label="Amount"
           variant="outlined"
           type='number'
           size='small'
+          onChange={(e) => setAmount(Number(e.target.value))}
           fullWidth
           required
         />
@@ -122,7 +149,7 @@ export default function AddOrEditTransactionModal({
           control={
             <Switch
               checked={paid}
-              onChange={handlePaidChange}
+              onChange={(e) => setPaid(e.target.checked)}
             />
           }
           label="Pago"
