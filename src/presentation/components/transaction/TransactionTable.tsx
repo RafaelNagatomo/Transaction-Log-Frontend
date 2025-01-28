@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {
@@ -10,7 +10,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  IconButton
+  IconButton,
+  Typography
 } from '@mui/material'
 import Loading from '../shared/Loading'
 import TableHeaderToolbar from './TableHeaderToolbar'
@@ -71,35 +72,29 @@ interface TransactionTableProps {
   loading: boolean
   onAdd: () => void
   onEdit?: (transaction: Transaction) => void
+  onDelete?: (id: string) => void
 }
 
 export default function TransactionTable({
   transactions,
   loading,
   onAdd,
-  onEdit
+  onEdit,
+  onDelete
 }: TransactionTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-
   const handleEdit = (row: Transaction) => {
-    console.log(row)
     if(row) {
       onEdit?.(row)
     }
   }
 
   const handleDelete = (row: Transaction) => {
-    console.log('Delete clicked', row)
+    if(row._id) {
+      onDelete?.(row._id)
+    }
   }
 
   if (loading) {
@@ -125,7 +120,9 @@ export default function TransactionTable({
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  <Typography color='text-bolder'>
+                    {column.label}
+                  </Typography>
                 </TableCell>
               ))}
             </TableRow>
@@ -166,13 +163,16 @@ export default function TransactionTable({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[20, 50, 100]}
+        rowsPerPageOptions={[15, 30, 50]}
         component="div"
         count={transactions.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onPageChange={(_e, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(e) => {
+          setRowsPerPage(+e.target.value)
+          setPage(0)
+        }}
       />
     </Paper>
   )

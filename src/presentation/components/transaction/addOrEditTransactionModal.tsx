@@ -92,7 +92,9 @@ export default function AddOrEditTransactionModal({
         },
       }}
     >
-      <DialogTitle>Add Transaction</DialogTitle>
+      <DialogTitle>
+        {!editTransaction ? 'Add' : 'Edit' } {'Transaction'}
+      </DialogTitle>
       <DialogContent>
         <FormControl component="fieldset" sx={{ mb: 2 }}>
           <FormLabel component="legend">Tipo de Transação</FormLabel>

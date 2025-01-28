@@ -43,7 +43,7 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
   }
 
   async deleteTransaction(_id: string): Promise<Transaction | null> {
-    await api.put(`/transactions/delete/${_id}`, _id)
+    await api.put(`/transactions/delete/${_id}`, { _id })
 
     return {
       _id,
