@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Transaction from '~/domain/entities/Transaction'
-import Header from '../components/layout/Header'
 import TransactionTable from '../components/transaction/TransactionTable'
 import ConfirmDeleteModal from '../components/transaction/ConfirmDeleteModal'
-import AddOrEditTransactionModal from '../components/transaction/addOrEditTransactionModal'
+import AddOrEditTransactionModal from '../components/transaction/AddOrEditTransactionModal'
 import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
+import AsideMenu from '../components/layout'
 
-const TransactionPage: React.FC = () => {
+const TransactionPage = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [editTransaction, setEditTransaction] = useState<Transaction>()
@@ -52,9 +52,8 @@ const TransactionPage: React.FC = () => {
   }, [])
 
   return (
-    <>
-      <Header />
-      <Stack spacing={2} sx={{ p: 6 }}>
+    <AsideMenu>
+      <Stack>
         <TransactionTable
           transactions={transactions}
           loading={loading}
@@ -79,7 +78,7 @@ const TransactionPage: React.FC = () => {
         setOpenModal={setConfirmModalOpen}
         deleteOk={handleDelete}
       />
-    </>
+    </AsideMenu>
   )
 }
 

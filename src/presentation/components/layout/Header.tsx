@@ -4,10 +4,24 @@ import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import { AccountCircle } from '@mui/icons-material'
-import { AppBar, Badge, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import {
+  AppBar,
+  Badge,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography
+} from '@mui/material'
 import { useAuthStore } from '~/infrastructure/stores/authStore'
 
-export default function Header() {
+interface HeaderProps {
+  open: boolean,
+  handleDrawerOpen: () => void
+}
+
+export default function Header({ open, handleDrawerOpen }: HeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null)
@@ -115,7 +129,13 @@ export default function Header() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            onClick={handleDrawerOpen}
+            sx={[
+              {
+                mr: 2,
+              },
+              open && { display: 'none' },
+            ]}
           >
             <MenuIcon />
           </IconButton>
