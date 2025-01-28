@@ -82,8 +82,8 @@ export default function TransactionTable({
   onEdit,
   onDelete
 }: TransactionTableProps) {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [page, setPage] = useState<number>(0)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(15)
 
   const handleEdit = (row: Transaction) => {
     if(row) {
