@@ -6,7 +6,7 @@ import { defaultTheme } from '~/assets/styles/themes/defaultTheme.ts'
 import { GlobalStyles } from '~/assets/styles/globalStyles'
 import { useAuthStore } from './infrastructure/stores/authStore'
 import LoginPage from './presentation/pages/LoginPage'
-import HomePage from './presentation/pages/HomePage'
+import TransactionPage from './presentation/pages/TransactionPage'
 import RegisterPage from './presentation/pages/RegisterPage'
 
 const App: React.FC = () => {
@@ -20,19 +20,19 @@ const App: React.FC = () => {
           <Routes>
             <Route
               path='/'
-              element={<Navigate to={isAuthenticated ? '/home' : '/login'} />}
+              element={<Navigate to={isAuthenticated ? '/transaction' : '/login'} />}
             />
             <Route
               path='/login'
-              element={!isAuthenticated ? <LoginPage /> : <Navigate to='/home' />}
+              element={!isAuthenticated ? <LoginPage /> : <Navigate to='/transaction' />}
             />
             <Route
               path='/register'
-              element={!isAuthenticated ? <RegisterPage /> : <Navigate to='/home' />}
+              element={!isAuthenticated ? <RegisterPage /> : <Navigate to='/transaction' />}
             />
             <Route
-              path='/home'
-              element={isAuthenticated ? <HomePage /> : <Navigate to='/login' />}
+              path='/transaction'
+              element={isAuthenticated ? <TransactionPage /> : <Navigate to='/login' />}
             />
           </Routes>
         </Router>

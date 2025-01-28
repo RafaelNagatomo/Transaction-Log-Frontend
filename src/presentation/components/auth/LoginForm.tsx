@@ -16,7 +16,7 @@ const LoginForm: React.FC = () => {
     try {
       await login(email, password)
       console.error('Login successful!')
-      navigate('/home')
+      navigate('/transaction')
     } catch (error) {
       setError('Error logging in. Check your details.')
       console.error({Message: 'Login failed', error: error})

@@ -7,7 +7,7 @@ import AddOrEditTransactionModal from '../components/transaction/addOrEditTransa
 import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
 
-const HomePage: React.FC = () => {
+const TransactionPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [editTransaction, setEditTransaction] = useState<Transaction>()
@@ -83,4 +83,4 @@ const HomePage: React.FC = () => {
   )
 }
 
-export default HomePage
+export default TransactionPage
