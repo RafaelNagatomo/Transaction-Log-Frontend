@@ -16,9 +16,13 @@ export default class AuthService {
   }
 
   async login(email: string, password: string) {
-    const token = await this.loginUseCase.execute(email, password)
-    if(token) localStorage.setItem('authToken', token)
-    return token
+    const data = await this.loginUseCase.execute(email, password)
+
+    if(data) {
+      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('authToken', data.token)
+    }
+    return data
   }
 
   async register(name: string, email: string, password: string) {
@@ -27,6 +31,7 @@ export default class AuthService {
 
   async logout() {
     localStorage.removeItem('authToken')
+    localStorage.removeItem('user')
     return this.logoutUseCase.execute()
   }
 }

@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import User from '~/domain/entities/User'
 import CreateTransactionUseCase from '~/application/transaction/createTransactionUseCase'
 import Transaction from '~/domain/entities/Transaction'
 import TransactionRepositoryImpl from '../repositories/TransactionRepositoryImpl'
@@ -26,7 +27,10 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   transactions: [],
 
   create: async (transaction) => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}') as User
+
     const Transaction: Transaction = {
+      user: user,
       description: transaction.description || '',
       amount: transaction.amount || 0,
       type: transaction.type || 'income',

@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import Transaction from '~/domain/entities/Transaction'
+import User from '~/domain/entities/User'
 import {
   Button,
   Dialog,
@@ -12,8 +15,6 @@ import {
   Switch,
   TextField
 } from '@mui/material'
-import { useEffect, useState } from 'react'
-import Transaction from '~/domain/entities/Transaction'
 
 interface AddOrEditTransactionModalProps {
   openModal: boolean
@@ -32,6 +33,7 @@ export default function AddOrEditTransactionModal({
   const [type, setType] = useState<string>('outcome')
   const [description, setDescription] = useState<string | null>('')
   const [amount, setAmount] = useState<number | null>()
+  const user = JSON.parse(localStorage.getItem('user') || '{}') as User
 
   function resetFields() {
     setPaid(false)
@@ -51,6 +53,7 @@ export default function AddOrEditTransactionModal({
     const formJson = Object.fromEntries((formData).entries())
 
     const nextTransaction = new Transaction(
+      user,
       type as 'income' | 'outcome',
       parseFloat(formJson.amount as string),
       formJson.description as string,
@@ -164,6 +167,7 @@ export default function AddOrEditTransactionModal({
         <Button
           variant='outlined'
           color='secondary'
+          size='small'
           onClick={handleClose}
         >
           Cancel
@@ -171,6 +175,7 @@ export default function AddOrEditTransactionModal({
         <Button
           variant='contained'
           type="submit"
+          size='small'
         >
           Save
         </Button>

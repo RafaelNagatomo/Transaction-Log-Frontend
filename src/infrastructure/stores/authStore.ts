@@ -19,8 +19,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: !!localStorage.getItem('authToken'),
 
   login: async (email, password) => {
-    const token = await authService.login(email, password)
-    set({ token, isAuthenticated: true })
+    const data = await authService.login(email, password)
+    set({ token: data.token, user: data.user, isAuthenticated: true })
   },
 
   register: async (name, email, password) => {

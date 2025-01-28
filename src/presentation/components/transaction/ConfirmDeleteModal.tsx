@@ -48,12 +48,14 @@ export default function ConfirmDeleteModal({
           <Button
             variant='outlined'
             color='secondary'
+            size='small'
             onClick={handleClose}
           >
             Cancel
           </Button>
           <Button
             variant='contained'
+            size='small'
             onClick={handleOk}
           >
             Ok

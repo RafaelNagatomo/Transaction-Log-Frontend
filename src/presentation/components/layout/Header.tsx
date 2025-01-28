@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SiTransifex } from 'react-icons/si'
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -22,6 +23,7 @@ interface HeaderProps {
 }
 
 export default function Header({ open, handleDrawerOpen }: HeaderProps) {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null)
@@ -49,6 +51,7 @@ export default function Header({ open, handleDrawerOpen }: HeaderProps) {
 
   const handleLogout = () => {
     logout()
+    navigate('/login')
     handleMenuClose()
   }
 

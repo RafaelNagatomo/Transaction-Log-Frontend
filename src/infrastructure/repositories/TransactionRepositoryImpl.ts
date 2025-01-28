@@ -1,11 +1,15 @@
 import api from '../http/axios/AxiosHttpClient'
+import User from '~/domain/entities/User'
 import Transaction from '~/domain/entities/Transaction'
 import ITransactionRepository from '~/domain/repositories/ITransactionRepository'
 
 
 export default class TransactionRepositoryImpl implements ITransactionRepository {
   async createTransaction(transaction: Transaction): Promise<Transaction> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}') as User
+    
     const response = await api.post('/transactions/create', {
+      user: user,
       description: transaction.description || '',
       amount: transaction.amount || 0,
       type: transaction.type || 'income',
@@ -28,6 +32,11 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
 
     return {
       _id,
+      user: {
+        id: '',
+        name: '',
+        email: ''
+      },
       type: 'income',
       amount: 0,
       description: '',
@@ -47,6 +56,11 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
 
     return {
       _id,
+      user: {
+        id: '',
+        name: '',
+        email: ''
+      },
       type: 'income',
       amount: 0,
       description: '',
