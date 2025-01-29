@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Navigate } from "react-router-dom";
+import { ReactElement } from "react"
+import { Navigate } from "react-router-dom"
 
 const ManageAccess: React.FC<{ element: ReactElement; path: string }> = ({ element, path }) => {
   const isAuthenticated = !!localStorage.getItem('authToken')

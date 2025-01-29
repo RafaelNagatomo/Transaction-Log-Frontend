@@ -9,17 +9,19 @@ import ErrorPage from '../pages/error'
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/transaction" />} />
+      <Route path="/" element={<Navigate to="/transaction" replace />} />
 
-      <Route path="/login" element={<ManageAccess element={<LoginPage />} path="/login" />} />
-      <Route path="/register" element={<ManageAccess element={<RegisterPage />} path="/register" />} />
+      <Route
+        path="/login"
+        element={<ManageAccess element={<LoginPage />} path="/login" />}
+      />
+      <Route
+        path="/register"
+        element={<ManageAccess element={<RegisterPage />} path="/register" />}
+      />
       <Route
         path="/transaction"
-        element={
-          <ManageAccess
-            path="/transaction"
-            element={<DefaultLayout><TransactionPage /></DefaultLayout>}
-          />
+        element={<ManageAccess element={<DefaultLayout><TransactionPage /></DefaultLayout>} path="/transaction" />
         }
       />
 
