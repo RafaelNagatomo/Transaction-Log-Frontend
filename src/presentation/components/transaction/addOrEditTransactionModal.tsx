@@ -63,7 +63,11 @@ export default function AddOrEditTransactionModal({
     if (!editTransaction) {
       onSubmit(nextTransaction, false)
     } else {
-      const edited = { ...nextTransaction, _id: editTransaction._id }
+      const edited = {
+        ...nextTransaction,
+        _id: editTransaction._id,
+        createdAt: editTransaction.createdAt
+      }
       onSubmit(edited, true)
     }
     handleClose()
