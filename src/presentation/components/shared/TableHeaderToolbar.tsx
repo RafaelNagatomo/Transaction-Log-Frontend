@@ -1,6 +1,12 @@
 import FilterListIcon from '@mui/icons-material/FilterList'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton, Stack, Toolbar, Tooltip, Typography } from "@mui/material"
+import {
+  IconButton,
+  Stack,
+  Toolbar,
+  Tooltip,
+  Typography
+} from "@mui/material"
 
 interface TableHeaderToolbarProps {
   title?: string
@@ -15,6 +21,11 @@ export default function TableHeaderToolbar ({
   addButton = false,
   onAdd
 }: TableHeaderToolbarProps) {
+  const toolipTitle =
+    title?.endsWith('s')
+      ? title?.toLowerCase().slice(0, -1)
+      : title?.toLowerCase()
+
   return (
     <Toolbar>
       <Stack
@@ -34,14 +45,14 @@ export default function TableHeaderToolbar ({
 
         <Stack direction={'row'}>
           {filterButton && (
-            <Tooltip title="Filter list">
+            <Tooltip title="Filter List">
               <IconButton>
                 <FilterListIcon />
               </IconButton>
             </Tooltip>
           )}
           {addButton && (
-            <Tooltip title="Add transaction">
+            <Tooltip title={`Add ${toolipTitle}`}>
               <IconButton onClick={onAdd}>
                 <AddIcon />
               </IconButton>
