@@ -4,7 +4,11 @@ import api from '../http/axios/AxiosHttpClient'
 
 
 export default class AuthRepositoryImpl implements IAuthRepository {
-  async register(name: string, email: string, password: string): Promise<User> {
+  async register(
+    name: string,
+    email: string,
+    password: string
+  ): Promise<User> {
     const response = await api.post('/auth/register', {
       name,
       email,
@@ -19,7 +23,13 @@ export default class AuthRepositoryImpl implements IAuthRepository {
     )
   }
 
-  async login(email: string, password: string): Promise<{user: User; token: string}> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<{
+    user: User
+    token: string
+  }> {
     const response = await api.post('/auth/login', {
       email,
       password,

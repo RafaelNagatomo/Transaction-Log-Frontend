@@ -6,6 +6,7 @@ export default class CreateTransactionUseCase {
     
   async execute(transaction: Transaction): Promise<Transaction> {
     const allTransactions = await this.transactionRepositoryImpl.findAllTransactions()
+    
     const transactionAlreadyExists = allTransactions.find(t =>
       t.description === transaction.description
     )
