@@ -14,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import Loading from '../shared/Loading'
-import TableHeaderToolbar from './TableHeaderToolbar'
+import TableHeaderToolbar from '../shared/TableHeaderToolbar'
 import Transaction from '~/domain/entities/Transaction'
 
 interface Column {
@@ -141,6 +141,8 @@ export default function TransactionTable({
                             ? column.format(value)
                             : column.date && typeof value === 'string'
                             ? column.date(value)
+                            : typeof value === 'object' && value !== null
+                            ? JSON.stringify(value)
                             : value}
 
                           {column.id === 'action' && (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Transaction from '~/domain/entities/Transaction'
 import TransactionTable from '../../components/transaction/TransactionTable'
-import ConfirmDeleteModal from '../../components/transaction/ConfirmDeleteModal'
+import ConfirmDeleteModal from '../../components/shared/ConfirmDeleteModal'
 import AddOrEditTransactionModal from '../../components/transaction/AddOrEditTransactionModal'
 import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
@@ -73,6 +73,8 @@ const TransactionPage = () => {
       />
 
       <ConfirmDeleteModal
+        title='Delete transaction'
+        description='Do you really want to delete this transaction?'
         openModal={confirmModalOpen}
         setOpenModal={setConfirmModalOpen}
         deleteOk={handleDelete}

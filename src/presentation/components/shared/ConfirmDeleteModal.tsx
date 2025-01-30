@@ -7,12 +7,16 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 interface ConfirmDeleteModalProps {
+  title: string
+  description: string
   openModal: string | null
   setOpenModal: React.Dispatch<React.SetStateAction<string | null>>
   deleteOk: (id: string | null) => void
 }
 
 export default function ConfirmDeleteModal({
+  title,
+  description,
   openModal,
   setOpenModal,
   deleteOk
@@ -36,11 +40,11 @@ export default function ConfirmDeleteModal({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Delete transaction
+          {title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <p>Do you really want to delete this transaction?</p>
+            <p>{description}</p>
             <p>This action is irreversible!</p>
           </DialogContentText>
         </DialogContent>
