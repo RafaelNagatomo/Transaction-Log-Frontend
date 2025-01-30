@@ -40,7 +40,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
       isActive: transaction.isActive || false,
     }
     const newTransaction = await createTransactionUseCase.execute(Transaction)
-    set((state) => ({ transactions: [...state.transactions, newTransaction] }))
+    set((state) => ({ transactions: [newTransaction, ...state.transactions] }))
   },
 
   update: async (updatedTransaction) => {

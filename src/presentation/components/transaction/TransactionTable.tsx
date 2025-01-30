@@ -83,7 +83,7 @@ export default function TransactionTable({
   onDelete
 }: TransactionTableProps) {
   const [page, setPage] = useState<number>(0)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(15)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
   const handleEdit = (row: Transaction) => {
     if(row) {
@@ -110,7 +110,7 @@ export default function TransactionTable({
         onAdd={onAdd}
       />
 
-      <TableContainer sx={{ maxHeight: 550 }}>
+      <TableContainer sx={{ maxHeight: 580 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -165,7 +165,7 @@ export default function TransactionTable({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[15, 30, 50]}
+        rowsPerPageOptions={[10, 25, 50]}
         component="div"
         count={transactions.length}
         rowsPerPage={rowsPerPage}

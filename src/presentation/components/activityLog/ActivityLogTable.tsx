@@ -35,51 +35,57 @@ export default function ActivityLogTable({
   loading
 }: ActivityLogTableProps) {
   const [page, setPage] = useState<number>(0)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(15)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
 
   if (loading) {
     return <Loading />
   }
 
   return (
-    <TableContainer component={Paper}>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableHeaderToolbar
         title="Activity Logs"
+        filterButton
       />
-      <Table aria-label="collapsible table">
-        <TableHead sx={{ backgroundColor: '#F5F5F5' }}>
-          <TableRow>
-            <TableCell />
-            {columnsLabel.map(label => (
-              <TableCell>
-                <Typography>
-                  {label}
-                </Typography>
-              </TableCell>
+
+      <TableContainer sx={{ maxHeight: 580 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              {columnsLabel.map(label => (
+                <TableCell>
+                  <Typography>
+                    {label}
+                  </Typography>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {activityLogs
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              ?.map((log) => (
+              <RowRender
+                key={log._id}
+                row={createData(
+                  log._id,
+                  log.changedAt,
+                  log.changedBy,
+                  log.eventType,
+                  log.action,
+                  log?.oldData,
+                  log.newData,
+                  log.clientIp,
+                  JSON.stringify(log.userAgent)
+                )}
+              />
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {activityLogs?.map((log) => (
-            <RowRender
-              key={log._id}
-              row={createData(
-                log._id,
-                log.changedAt,
-                log.changedBy,
-                log.eventType,
-                log.action,
-                log?.oldData,
-                log.newData,
-                log.clientIp,
-                JSON.stringify(log.userAgent)
-              )}
-            />
-          ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[15, 30, 50]}
+        rowsPerPageOptions={[10, 25, 50]}
         component="div"
         count={activityLogs?.length}
         rowsPerPage={rowsPerPage}
@@ -90,6 +96,6 @@ export default function ActivityLogTable({
           setPage(0)
         }}
       />
-    </TableContainer>
+    </Paper>
   )
 }
