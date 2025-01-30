@@ -9,7 +9,7 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
     const user = JSON.parse(localStorage.getItem('user') || '{}') as User
     
     const response = await api.post('/transactions/create', {
-      user: user,
+      createdBy: user,
       description: transaction.description || '',
       amount: transaction.amount || 0,
       type: transaction.type || 'income',
@@ -32,8 +32,8 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
 
     return {
       _id,
-      user: {
-        id: '',
+      createdBy: {
+        _id,
         name: '',
         email: ''
       },
@@ -56,8 +56,8 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
 
     return {
       _id,
-      user: {
-        id: '',
+      createdBy: {
+        _id,
         name: '',
         email: ''
       },

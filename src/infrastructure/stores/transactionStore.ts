@@ -16,7 +16,7 @@ interface TransactionState {
   getById: (id: string) => Promise<Transaction | null>
   delete: (id: string) => Promise<void>
 }
-const  transactionRepository = new TransactionRepositoryImpl()
+const transactionRepository = new TransactionRepositoryImpl()
 const createTransactionUseCase = new CreateTransactionUseCase(transactionRepository)
 const deleteTransactionUseCase = new DeleteTransactionUseCase(transactionRepository)
 const findAllTransactionsUseCase = new FindAllTransactionsUseCase(transactionRepository)
@@ -30,7 +30,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     const user = JSON.parse(localStorage.getItem('user') || '{}') as User
 
     const Transaction: Transaction = {
-      user: user,
+      createdBy: user,
       description: transaction.description || '',
       amount: transaction.amount || 0,
       type: transaction.type || 'income',
