@@ -27,14 +27,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const menuItems = [
   {
-    label: 'Transaction',
+    label: 'Transactions',
     icon: MailIcon,
     path: '/transaction'
   },
   {
-    label: 'Logs',
+    label: 'Activity Logs',
     icon: InboxIcon,
-    path: '/log'
+    path: '/activitylog'
   }
 ]
 

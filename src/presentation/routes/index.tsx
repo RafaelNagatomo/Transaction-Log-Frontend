@@ -5,6 +5,7 @@ import LoginPage from '../pages/auth/LoginPage'
 import RegisterPage from '../pages/auth/RegisterPage'
 import TransactionPage from '../pages/transaction'
 import ErrorPage from '../pages/error'
+import ActivityLogPage from '../pages/activityLog'
 
 const AppRoutes: React.FC = () => {
   return (
@@ -22,6 +23,11 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/transaction"
         element={<ManageAccess element={<DefaultLayout><TransactionPage /></DefaultLayout>} path="/transaction" />
+        }
+      />
+      <Route
+        path="/activitylog"
+        element={<ManageAccess element={<DefaultLayout><ActivityLogPage /></DefaultLayout>} path="/activitylog" />
         }
       />
 
