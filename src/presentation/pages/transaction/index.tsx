@@ -5,6 +5,7 @@ import ConfirmDeleteModal from '../../components/shared/ConfirmDeleteModal'
 import AddOrEditTransactionModal from '../../components/transaction/AddOrEditTransactionModal'
 import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
+import Loading from '~/presentation/components/shared/Loading'
 
 const TransactionPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -40,17 +41,20 @@ const TransactionPage = () => {
       deleteTransaction(id)
     }
   }
-  
+
   useEffect(() => {
     getAll()
   }, [getAll])
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <>
       <Stack>
         <TransactionTable
           transactions={transactions}
-          loading={isLoading}
           onAdd={() => {
             setEditTransaction(undefined)
             setOpenModal(true)

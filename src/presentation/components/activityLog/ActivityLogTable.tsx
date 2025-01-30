@@ -10,7 +10,6 @@ import {
   TableHead,
   Typography,
 } from '@mui/material'
-import Loading from '../shared/Loading'
 import TableHeaderToolbar from '../shared/TableHeaderToolbar'
 import ActivityLog from '~/domain/entities/ActivityLog'
 import createData from './createData'
@@ -27,19 +26,13 @@ const columnsLabel: string[] = [
 
 interface ActivityLogTableProps {
   activityLogs: ActivityLog[]
-  loading: boolean
 }
 
 export default function ActivityLogTable({
   activityLogs,
-  loading
 }: ActivityLogTableProps) {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
-
-  if (loading) {
-    return <Loading />
-  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>

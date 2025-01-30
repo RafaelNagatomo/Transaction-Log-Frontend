@@ -13,7 +13,6 @@ import {
   IconButton,
   Typography
 } from '@mui/material'
-import Loading from '../shared/Loading'
 import TableHeaderToolbar from '../shared/TableHeaderToolbar'
 import Transaction from '~/domain/entities/Transaction'
 
@@ -69,7 +68,6 @@ const columns: readonly Column[] = [
 
 interface TransactionTableProps {
   transactions: Transaction[]
-  loading: boolean
   onAdd: () => void
   onEdit?: (transaction: Transaction) => void
   onDelete?: (id: string) => void
@@ -77,7 +75,6 @@ interface TransactionTableProps {
 
 export default function TransactionTable({
   transactions,
-  loading,
   onAdd,
   onEdit,
   onDelete
@@ -95,10 +92,6 @@ export default function TransactionTable({
     if(row._id) {
       onDelete?.(row._id)
     }
-  }
-
-  if (loading) {
-    return <Loading />
   }
 
   return (
