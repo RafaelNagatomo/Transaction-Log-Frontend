@@ -10,6 +10,7 @@ import FindTransactionByIdUseCase from '~/application/transaction/findTransactio
 
 interface TransactionState {
   transactions: Transaction[]
+  isLoading: boolean
   create: (transaction: Transaction) => Promise<void>
   update: (updatedTransaction: Transaction) => Promise<void>
   getAll: () => Promise<void>
@@ -25,6 +26,7 @@ const updateTransactionUseCase = new UpdateTransactionUseCase(transactionReposit
 
 export const useTransactionStore = create<TransactionState>((set, get) => ({
   transactions: [],
+  isLoading: false,
 
   create: async (transaction) => {
     const user = JSON.parse(localStorage.getItem('user') || '{}') as User
@@ -51,8 +53,11 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   },
 
   getAll: async () => {
+    if (get().transactions.length > 0 || get().isLoading) return
+    
+    set({ isLoading: true })
     const transactions = await findAllTransactionsUseCase.execute()
-    set({ transactions })
+    set({ transactions, isLoading: false })
   },
 
   getById: async (id) => {

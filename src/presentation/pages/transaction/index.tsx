@@ -7,11 +7,10 @@ import { useTransactionStore } from '~/infrastructure/stores/transactionStore'
 import { Stack } from '@mui/material'
 
 const TransactionPage = () => {
-  const [loading, setLoading] = useState<boolean>(true)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [editTransaction, setEditTransaction] = useState<Transaction>()
   const [confirmModalOpen, setConfirmModalOpen] = useState<string | null>(null)
-  const transactions = useTransactionStore((state) => state.transactions)
+  const { getAll, transactions, isLoading } = useTransactionStore()
   const createTransaction = useTransactionStore((state) => state.create)
   const updateTransaction = useTransactionStore((state) => state.update)
   const deleteTransaction = useTransactionStore((state) => state.delete)
@@ -43,19 +42,15 @@ const TransactionPage = () => {
   }
   
   useEffect(() => {
-    const fetchTransactions = async () => {
-      useTransactionStore.getState().getAll()
-      setLoading(false)
-    }
-    fetchTransactions()
-  }, [])
+    getAll()
+  }, [getAll])
 
   return (
     <>
       <Stack>
         <TransactionTable
           transactions={transactions}
-          loading={loading}
+          loading={isLoading}
           onAdd={() => {
             setEditTransaction(undefined)
             setOpenModal(true)
