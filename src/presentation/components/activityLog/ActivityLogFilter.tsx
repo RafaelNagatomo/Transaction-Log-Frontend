@@ -12,10 +12,10 @@ import {
   Button
 } from "@mui/material"
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
-import { useActivityLogStore } from "~/infrastructure/stores/activityLogStore"
+import { initialFilters, useActivityLogStore } from "~/infrastructure/stores/activityLogStore"
 import UserSelect from "../shared/UserSelect"
 
-const actionTypes = ["create", "update", "delete"]
+const actionTypes = ["Create", "Update", "Delete"]
 
 interface ActivityFilterListProps {
   closeDrawer: () => void
@@ -26,12 +26,15 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
   
   const handleQeuryFilters = () => {
     getAll()
-    setFilters({})
     closeDrawer()
   }
 
+  const handleClearFilter = () => {
+    setFilters(initialFilters)
+  }
+
   return (
-    <Stack sx={{ width: 550, p: 2 }} gap={4}>
+    <Stack sx={{ height: '100%', width: 550, p: 2 }} gap={4}>
       <Typography fontSize={25}>Activity Log Filter</Typography>
       <Divider />
 
@@ -39,23 +42,25 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
         <Typography mb={1}>Changed at</Typography>
         <Box display={"flex"} flexDirection={"row"} gap={1}>
           <DatePicker
+            label="Start Date"
+            value={moment(filters?.startDate)}
             slotProps={{
               textField: {
                 size: "small"
               }
             }}
-            label="Start Date"
             onChange={(newValue) => setFilters({
               startDate: moment(newValue).format('YYYY-MM-DD')
             })}
           />
           <DatePicker
+            value={moment(filters?.endDate)}
+            label="End Date"
             slotProps={{
               textField: {
                 size: "small"
               }
             }}
-            label="End Date"
             onChange={(newValue) => setFilters({
               endDate: moment(newValue).format('YYYY-MM-DD')
             })}
@@ -63,7 +68,10 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
         </Box>
       </Box>
 
-      <UserSelect setFilters={setFilters} />
+      <UserSelect
+        filters={filters}
+        setFilters={setFilters}
+      />
 
       <Box>
         <Typography mb={1}>Action</Typography>
@@ -95,31 +103,37 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
           variant="outlined"
           size="small"
           placeholder="Enter User Agent"
-          value={filters.userAgent}
+          value={filters?.userAgent}
           onChange={(event) => setFilters({
             userAgent: event.target.value
           })}
         />
       </Box>
 
-      <Box display={"flex"} flexDirection={"row"} gap={1}>
+      <Box
+        gap={1}
+        height={'100%'}
+        display={"flex"}
+        justifyContent={'end'}
+        alignItems={'end'}
+      >
         <Button
-            type='submit'
-            variant='outlined'
-            color='secondary'
-            size='small'
-            onClick={closeDrawer}
-          >
-            Cancel
+          sx={{ width: 100 }}
+          type='submit'
+          variant='outlined'
+          color='primary'
+          onClick={handleClearFilter}
+        >
+          Clear
         </Button>
         <Button
-            type='submit'
-            variant='contained'
-            color='primary'
-            size='small'
-            onClick={handleQeuryFilters}
-          >
-            Ok
+          sx={{ width: 100 }}
+          type='submit'
+          variant='contained'
+          color='primary'
+          onClick={handleQeuryFilters}
+        >
+          Search
         </Button>
       </Box>
     </Stack>

@@ -10,14 +10,15 @@ import UserRepositoryImpl from '~/infrastructure/repositories/UserRepositoryImpl
 import User from '~/domain/entities/User'
 
 interface userSelectProps {
-  filters?: [key: string]
-  setFilters: (newFilters: {[key: string]: string}) => void
+  filters?: { [key: string]: string }
+  setFilters: (newFilters: { [key: string]: string }) => void
 }
 
 const userRepositoryImpl = new UserRepositoryImpl()
 const findAllUsersUseCase = new FindAllUsersUseCase(userRepositoryImpl)
 
 const UserSelect: React.FC<userSelectProps> = ({
+  filters,
   setFilters
 }) => {
   const [users, setUsers] = useState<User[]>()
@@ -36,7 +37,7 @@ const UserSelect: React.FC<userSelectProps> = ({
       <Select
         fullWidth
         size="small"
-        value={users}
+        value={filters?.changedBy}
         onChange={(event) => setFilters({
           changedBy: event.target.value as string
         })}

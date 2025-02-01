@@ -12,22 +12,31 @@ interface ActivityLogState {
   getAll: () => Promise<void>
 }
 
+export const initialFilters = {
+  startDate: '',
+  endDate: '',
+  changedBy: '',
+  action: {},
+  userAgent: ''
+}
+
 const activityLogRepositoryImpl = new ActivityLogRepositoryImpl()
 const findAllActivityLogsUseCase = new FindAllActivityLogsUseCase(activityLogRepositoryImpl)
 
 export const useActivityLogStore = create<ActivityLogState>((set, get) => ({
   activityLogs: [],
   isLoading: false,
-  filters: {},
-
+  filters: initialFilters,
+  
   setFilters: (newFilters) => set((state) => ({
     filters: { ...state.filters, ...newFilters }
   })),
-
+  
   getAll: async () => {
-    if (get().activityLogs.length > 0 || get().isLoading) return
-    const { filters } = get()
+    const { filters, isLoading } = get()
     const params = new URLSearchParams()
+
+    if (isLoading) return
   
     Object.entries(filters).forEach(([key, value]) => {
       if (value && key !== "action") {
@@ -40,13 +49,13 @@ export const useActivityLogStore = create<ActivityLogState>((set, get) => ({
         .filter(([, isSelected]) => isSelected)
         .map(([action]) => action)
         
-        if (selectedActions.length > 0) {
-          params.append("action", selectedActions.join(","))
-        }
+      if (selectedActions.length > 0) {
+        params.append("action", selectedActions.join(","))
       }
-      
-      set({ isLoading: true })
-      const activityLogs = await findAllActivityLogsUseCase.execute(params.toString())
+    }
+
+    set({ isLoading: true })
+    const activityLogs = await findAllActivityLogsUseCase.execute(params.toString())
     set({ activityLogs, isLoading: false })
-  },
+  }
 }))
