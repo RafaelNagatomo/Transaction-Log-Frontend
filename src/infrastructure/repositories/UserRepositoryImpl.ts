@@ -4,7 +4,7 @@ import IUserRepository from "~/domain/repositories/IUserRepository"
 
 export default class UserRepositoryImpl implements IUserRepository {
   async findAllUsers(queryParams?: string): Promise<User[]> {
-    const allActivityLogs = await api.get(`/users?${queryParams}`, {})
+    const allActivityLogs = await api.get(`/users?${queryParams ? queryParams : ''}`, {})
     
     return allActivityLogs.data
   }
