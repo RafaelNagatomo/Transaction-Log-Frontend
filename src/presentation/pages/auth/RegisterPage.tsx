@@ -1,7 +1,7 @@
 import React from 'react'
 import RegisterForm from '../../components/auth/RegisterForm'
 import { CardMedia, Grid2 } from '@mui/material'
-import auth_page from '~/assets/media/auth_page.jpg'
+import auth_page from '/assets/media/auth_page.jpg'
 
 const RegisterPage: React.FC = () => {
   return (

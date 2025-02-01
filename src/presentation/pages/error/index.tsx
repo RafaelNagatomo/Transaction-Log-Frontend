@@ -1,6 +1,6 @@
 import { Button, CardMedia, Grid2, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import error_img from '~/assets/media/error_not_found404.jpg'
+import error_img from '/assets/media/error_not_found404.jpg'
 
 const ErrorPage: React.FC = () => {
   const navigate = useNavigate()
