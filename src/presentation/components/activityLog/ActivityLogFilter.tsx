@@ -5,8 +5,6 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  MenuItem,
-  Select,
   Divider,
   Stack,
   Box,
@@ -15,8 +13,8 @@ import {
 } from "@mui/material"
 import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { useActivityLogStore } from "~/infrastructure/stores/activityLogStore"
+import UserSelect from "../shared/UserSelect"
 
-const userAgents = ["Chrome", "Firefox", "Safari", "Edge", "Opera"]
 const actionTypes = ["create", "update", "delete"]
 
 interface ActivityFilterListProps {
@@ -28,6 +26,7 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
   
   const handleQeuryFilters = () => {
     getAll()
+    setFilters({})
     closeDrawer()
   }
 
@@ -64,27 +63,7 @@ const ActivityFilterList: React.FC<ActivityFilterListProps> = ({ closeDrawer }) 
         </Box>
       </Box>
 
-      <Box>
-        <Typography mb={1}>User</Typography>
-        <Select
-          fullWidth
-          size="small"
-          value={filters?.changedBy}
-          onChange={(event) => setFilters({
-            changedBy: event.target.value
-          })}
-          displayEmpty
-        >
-          <MenuItem value="" disabled>
-            Select User
-          </MenuItem>
-          {userAgents.map((user) => (
-            <MenuItem key={user} value={user}>
-              {user}
-            </MenuItem>
-          ))}
-        </Select>
-      </Box>
+      <UserSelect setFilters={setFilters} />
 
       <Box>
         <Typography mb={1}>Action</Typography>
