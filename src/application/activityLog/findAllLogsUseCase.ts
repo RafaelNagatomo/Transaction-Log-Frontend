@@ -4,7 +4,7 @@ import ActivityLogRepositoryImpl from "~/infrastructure/repositories/ActivityLog
 export default class FindAllActivityLogsUseCase {
   constructor(private activityLogRepositoryImpl: ActivityLogRepositoryImpl) {}
 
-  async execute(): Promise<ActivityLog[]> {
-    return this.activityLogRepositoryImpl.findAllLogs()
+  async execute(filters?: string | undefined): Promise<ActivityLog[]> {
+    return this.activityLogRepositoryImpl.findAllLogs(filters)
   }
 }

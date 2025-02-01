@@ -13,13 +13,15 @@ interface TableHeaderToolbarProps {
   filterButton?: boolean
   addButton?: boolean
   onAdd?: () => void
+  onFilter?: () => void
 }
 
 export default function TableHeaderToolbar ({
   title,
   filterButton = false,
   addButton = false,
-  onAdd
+  onAdd,
+  onFilter
 }: TableHeaderToolbarProps) {
   const toolipTitle =
     title?.endsWith('s')
@@ -46,7 +48,7 @@ export default function TableHeaderToolbar ({
         <Stack direction={'row'}>
           {filterButton && (
             <Tooltip title="Filter List">
-              <IconButton>
+              <IconButton onClick={onFilter}>
                 <FilterListIcon />
               </IconButton>
             </Tooltip>

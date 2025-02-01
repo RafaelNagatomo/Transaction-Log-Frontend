@@ -26,10 +26,12 @@ const columnsLabel: string[] = [
 
 interface ActivityLogTableProps {
   activityLogs: ActivityLog[]
+  onFilter?: () => void
 }
 
 export default function ActivityLogTable({
   activityLogs,
+  onFilter
 }: ActivityLogTableProps) {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
@@ -39,6 +41,7 @@ export default function ActivityLogTable({
       <TableHeaderToolbar
         title="Activity Logs"
         filterButton
+        onFilter={onFilter}
       />
 
       <TableContainer sx={{ maxHeight: 580 }}>
@@ -46,8 +49,8 @@ export default function ActivityLogTable({
           <TableHead>
             <TableRow>
               <TableCell />
-              {columnsLabel.map(label => (
-                <TableCell>
+              {columnsLabel.map((label, i) => (
+                <TableCell key={i}>
                   <Typography>
                     {label}
                   </Typography>
