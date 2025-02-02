@@ -98,7 +98,6 @@ export default function TransactionTable({
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableHeaderToolbar
         title="Transactions"
-        filterButton
         addButton
         onAdd={onAdd}
       />
