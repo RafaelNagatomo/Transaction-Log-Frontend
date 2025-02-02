@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '~/infrastructure/stores/authStore'
+import { useFeedbackStore } from '~/infrastructure/stores/feedbackStore'
 
 const token = localStorage.getItem('authToken')
 
@@ -12,7 +13,14 @@ const api = axios.create({
 })
 
 api.interceptors.response.use(
-  response => response,
+  response => {
+    const message = response.data?.message
+    if (message) {
+      useFeedbackStore.getState().showMessage(message, 'success')
+    }
+    return response
+  },
+
   error => {
     if (error.response?.data?.message) {
       useAuthStore.getState().checkTokenExpired(error)

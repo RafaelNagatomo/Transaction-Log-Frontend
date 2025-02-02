@@ -42,8 +42,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const isAuthorizaded =
       status !== 403 && data?.message === 'Expired token'
 
-      console.log(isAuthorizaded)
-  
     if (!isAuthorizaded) return Promise.resolve(false)
 
     get().logout()

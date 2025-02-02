@@ -7,6 +7,7 @@ import { GlobalStyles } from '~/presentation/styles/globalStyles'
 import AppRoutes from './presentation/routes'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { FeedbackSnackbar } from './presentation/components/shared/FeedbackSnackbar'
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <GlobalStyles />
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <Router>
+            <FeedbackSnackbar />
             <AppRoutes />
           </Router>
         </LocalizationProvider>

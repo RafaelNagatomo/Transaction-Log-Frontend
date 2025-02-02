@@ -7,6 +7,7 @@ import FindAllTransactionsUseCase from '~/application/transaction/findAllTransac
 import UpdateTransactionUseCase from '~/application/transaction/updateTransactionUseCase'
 import DeleteTransactionUseCase from '~/application/transaction/deleteTransactionUseCase'
 import FindTransactionByIdUseCase from '~/application/transaction/findTransactionByIdUseCase'
+import { useFeedbackStore } from './feedbackStore'
 
 interface TransactionState {
   transactions: Transaction[]
@@ -37,14 +38,24 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
       amount: transaction.amount || 0,
       type: transaction.type || 'income',
       status: transaction.status || 'pending',
-      isActive: transaction.isActive || false,
+      isActive: transaction.isActive || false
     }
     const newTransaction = await createTransactionUseCase.execute(Transaction)
+
+    if (newTransaction) {
+      useFeedbackStore.getState().showMessage('Transaction created successfully!', 'success')
+    }
+
     set((state) => ({ transactions: [newTransaction, ...state.transactions] }))
   },
 
   update: async (updatedTransaction) => {
     const updated = await updateTransactionUseCase.execute(updatedTransaction)
+
+    if (updated) {
+      await useFeedbackStore.getState().showMessage('Transaction updated successfully!', 'success')
+    }
+
     set((state) => ({
       transactions: state.transactions.map((t) =>
         t._id === updatedTransaction._id ? updated! : t
@@ -70,9 +81,14 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   },
 
   delete: async (id) => {
-    await deleteTransactionUseCase.execute(id)
+    const deleted = await deleteTransactionUseCase.execute(id)
+  
+    if (deleted) {
+      await useFeedbackStore.getState().showMessage('Transaction deleted successfully!', 'success')
+    }
+  
     set((state) => ({
       transactions: state.transactions.filter((t) => t._id !== id),
     }))
-  },
+  }
 }))

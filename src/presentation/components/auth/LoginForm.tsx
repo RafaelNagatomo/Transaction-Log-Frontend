@@ -2,24 +2,32 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SiTransifex } from 'react-icons/si'
 import { useAuthStore } from '~/infrastructure/stores/authStore'
-import { TextField, Button, Typography, Box, Stack, Divider } from '@mui/material'
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Stack,
+  Divider
+} from '@mui/material'
+import { useFeedbackStore } from '~/infrastructure/stores/feedbackStore'
+import { AxiosError } from 'axios'
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
   const { login } = useAuthStore()
+  const { showMessage, showError } = useFeedbackStore()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       await login(email, password)
-      console.error('Login successful!')
+      showMessage('Login successful!', 'success')
       navigate('/transaction')
     } catch (error) {
-      setError('Error logging in. Check your details.')
-      console.error({Message: 'Login failed', error: error})
+      showError(error as AxiosError | Error)
     }
   }
 
@@ -73,15 +81,11 @@ const LoginForm: React.FC = () => {
           type='password'
           variant='outlined'
           value={password}
+          autoComplete="new-password"
           size='small'
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {error && (
-          <Typography color='error' align='center'>
-            {error}
-          </Typography>
-        )}
         <Button
           type='submit'
           variant='contained'

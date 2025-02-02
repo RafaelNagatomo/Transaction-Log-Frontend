@@ -3,24 +3,25 @@ import { SiTransifex } from 'react-icons/si'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '~/infrastructure/stores/authStore'
 import { TextField, Button, Stack, Typography, Box, Divider } from '@mui/material'
+import { AxiosError } from 'axios'
+import { useFeedbackStore } from '~/infrastructure/stores/feedbackStore'
 
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate()
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
   const { register } = useAuthStore()
+  const { showMessage, showError } = useFeedbackStore()
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       await register(name, email, password)
-      console.error('Registration successful! Please login.')
+      showMessage('Registration successful! Please login.', 'success')
       navigate('/login')
     } catch (error) {
-      setError('Erro ao registrar. Verifique seus dados.')
-      console.error({Message: 'Registration failed', error: error})
+      showError(error as AxiosError | Error)
     }
   }
 
@@ -82,11 +83,6 @@ const RegisterForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {error && (
-          <Typography color='error' align='center'>
-            {error}
-          </Typography>
-        )}
         <Button
           type='submit'
           variant='contained'
