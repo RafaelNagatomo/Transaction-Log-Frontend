@@ -9,7 +9,7 @@ export default class AuthRepositoryImpl implements IAuthRepository {
     email: string,
     password: string
   ): Promise<User> {
-    const response = await api.post('/auth/register', {
+    const response = await api.post('/api/auth/register', {
       name,
       email,
       password,
@@ -30,10 +30,11 @@ export default class AuthRepositoryImpl implements IAuthRepository {
     user: User
     token: string
   }> {
-    const response = await api.post('/auth/login', {
+    const response = await api.post('/api/auth/login', {
       email,
       password,
-    })
+    },
+  )
     const token = response.data.token
     const user = response.data.user
 
@@ -41,6 +42,6 @@ export default class AuthRepositoryImpl implements IAuthRepository {
   }
 
   async logout(): Promise<void> {
-    await api.post('/auth/logout', {})
+    await api.post('/api/auth/logout', {})
   }
 }

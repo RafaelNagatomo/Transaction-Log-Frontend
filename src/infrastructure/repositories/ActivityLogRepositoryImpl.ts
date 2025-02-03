@@ -4,7 +4,7 @@ import IActivityLogRepository from "~/domain/repositories/IActivityLogRepository
 
 export default class ActivityLogRepositoryImpl implements IActivityLogRepository {
   async findAllLogs(queryParams?: string): Promise<ActivityLog[]> {
-    const allActivityLogs = await api.get(`/activitylogs?${queryParams}`, {})
+    const allActivityLogs = await api.get(`/api/activitylogs?${queryParams}`, {})
     
     return allActivityLogs.data
   }

@@ -23,12 +23,12 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
   }
 
   async findAllTransactions(): Promise<Transaction[]> {
-    const allTransactions = await api.get('/transactions/', {})
+    const allTransactions = await api.get('/api/transactions/', {})
     return allTransactions.data
   }
 
   async findTransactionById(_id: string): Promise<Transaction | null> {
-    await api.get(`/transactions/find/${_id}`)
+    await api.get(`/api/transactions/find/${_id}`)
 
     return {
       _id,
@@ -46,13 +46,13 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
   }
 
   async updateTransaction(transaction: Transaction): Promise<Transaction | null> {
-    await api.put(`/transactions/update/${transaction._id}`, transaction)
+    await api.put(`/api/transactions/update/${transaction._id}`, transaction)
 
     return transaction
   }
 
   async deleteTransaction(_id: string): Promise<Transaction | null> {
-    await api.put(`/transactions/delete/${_id}`, { _id })
+    await api.put(`/api/transactions/delete/${_id}`, { _id })
 
     return {
       _id,
