@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# TransferX
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Descrição
+O **EventPlanner** é um SPA com princípios de Clean Arch e SOLID da aplicação de uma transação financeira, com a funcionalidade de registrar ações de um usuário para cada ação feita (CREATE, UPDATE, DELETE), permitindo também, ser visualizado em forma de histórico de ações.
 
-Currently, two official plugins are available:
+## 🚀 Executar Projeto
+- Requisitos:
+  - `Node.js V18+`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Clone o repositório git:
+```
+git clone https://github.com/RafaelNagatomo/Transaction-Log-Frontend.git
+```
+- Instale as dependências:
+```
+npm install
+```
+- Inicie em modo de desenvolvimento:
+```
+npm run dev
+```
+- Abra o navegador:
+  - Abra o navegador com a url `http://localhost:5173`
 
-## Expanding the ESLint configuration
+## 🛠 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React ⚛️ + TypeScript 🟦
+- Axios 🔗
+- Material UI 🎨
+- Styled Components 🎨
+- React Router 🚏
+- Zustand ⚡
+- Jest 📝
 
-- Configure the top-level `parserOptions` property like this:
+### 📡 Infra
+- Docker 🐳
+- Nginx 🌐
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📂 Estrutura do Projeto
+```
+TransferX/
+├── frontend/  # React/TypeScript
+│   ├── src/
+|   |   ├──__testes__/  # Testes com Jest
+│   │   ├── application/  # Regras de negócio
+│   │   ├── domain/  # Modelos e entidades
+│   │   ├── infra/  # Configuração de API e Axios
+│   │   ├── presentation/  # Componentes e rotas
+│   │   └── ...
+└── README.md  # Documentação
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## 🧪 Testes
+```sh
+npm run test:coverage
 ```
+---
+
+👨‍💻 **Desenvolvido por [Rafael Nagatomo](https://github.com/RafaelNagatomo)**
+
