@@ -104,7 +104,7 @@ export default function AddOrEditTransactionModal({
       </DialogTitle>
       <DialogContent>
         <FormControl component="fieldset" sx={{ mb: 2 }}>
-          <FormLabel component="legend">Tipo de Transação</FormLabel>
+          <FormLabel component="legend">Transaction Type</FormLabel>
           <RadioGroup
             aria-label="type"
             name="type"
@@ -161,7 +161,7 @@ export default function AddOrEditTransactionModal({
               onChange={(e) => setPaid(e.target.checked)}
             />
           }
-          label="Pago"
+          label="Paid"
           sx={{ mb: 2 }}
         />
 
@@ -170,7 +170,7 @@ export default function AddOrEditTransactionModal({
       <DialogActions>
         <Button
           variant='outlined'
-          color='secondary'
+          color='error'
           size='small'
           onClick={handleClose}
         >

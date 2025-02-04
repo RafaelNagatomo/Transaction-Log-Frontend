@@ -8,7 +8,7 @@ export default class TransactionRepositoryImpl implements ITransactionRepository
   async createTransaction(transaction: Transaction): Promise<Transaction> {
     const user = JSON.parse(localStorage.getItem('user') || '{}') as User
     
-    const response = await api.post('/transactions/create', {
+    const response = await api.post('/api/transactions/create', {
       createdBy: user,
       description: transaction.description || '',
       amount: transaction.amount || 0,

@@ -1,5 +1,6 @@
 import {
   Box,
+  Chip,
   Collapse,
   IconButton,
   Table,
@@ -15,6 +16,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import createData from "./createData"
 import User from "~/domain/entities/User"
+
+const actionChips: Record<string, 'warning' | 'primary' | 'error'> = {
+  Create: 'primary',
+  Update: 'warning',
+  Delete: 'error',
+}
 
 export default function RowRender(props: { row: ReturnType<typeof createData> } ) {
   const { row } = props
@@ -71,7 +78,16 @@ export default function RowRender(props: { row: ReturnType<typeof createData> } 
           ))}
         </TableCell>
         <TableCell>{row?.eventType}</TableCell>
-        <TableCell>{row?.action}</TableCell>
+        <TableCell>
+          <>
+            {row?.action && (
+              <Chip
+                label={row?.action}
+                color={actionChips[row?.action as keyof typeof actionChips]}
+              />
+            )}
+          </>
+        </TableCell>
         <TableCell>{row?.data.clientIp}</TableCell>
         <TableCell>{getUserAgentInfo(row?.data?.userAgent)}</TableCell>
       </TableRow>

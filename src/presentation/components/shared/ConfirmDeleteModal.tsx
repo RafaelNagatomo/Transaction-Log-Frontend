@@ -51,7 +51,7 @@ export default function ConfirmDeleteModal({
         <DialogActions>
           <Button
             variant='outlined'
-            color='secondary'
+            color='error'
             size='small'
             onClick={handleClose}
           >

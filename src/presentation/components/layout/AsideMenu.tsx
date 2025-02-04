@@ -1,5 +1,5 @@
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import { FaMoneyBillTrendUp } from 'react-icons/fa6'
+import { GoLog } from 'react-icons/go'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import {
@@ -28,12 +28,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const menuItems = [
   {
     label: 'Transactions',
-    icon: MailIcon,
+    icon: FaMoneyBillTrendUp,
     path: '/transaction'
   },
   {
     label: 'Activity Logs',
-    icon: InboxIcon,
+    icon: GoLog,
     path: '/activitylog'
   }
 ]
@@ -74,7 +74,7 @@ export default function AsideMenu ({ open, handleDrawerClose }: AsideMenuProps) 
           <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => navigate(item.path)}>
               <ListItemIcon>
-                {<item.icon />}
+                {<item.icon size={20}/>}
               </ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItemButton>

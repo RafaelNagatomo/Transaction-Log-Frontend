@@ -1,6 +1,8 @@
 import { ReactNode, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { MdDone } from 'react-icons/md'
+import { FaClock } from 'react-icons/fa'
 import {
   Paper,
   Table,
@@ -11,7 +13,8 @@ import {
   TableContainer,
   TableHead,
   IconButton,
-  Typography
+  Typography,
+  Chip
 } from '@mui/material'
 import TableHeaderToolbar from '../shared/TableHeaderToolbar'
 import Transaction from '~/domain/entities/Transaction'
@@ -23,6 +26,7 @@ interface Column {
   align?: 'right'
   format?: (value: number) => string
   date?: (value: string) => ReactNode
+  chip?: (value: string) => ReactNode
 }
 
 const columns: readonly Column[] = [
@@ -41,7 +45,26 @@ const columns: readonly Column[] = [
   {
     id: 'type',
     label: 'Type',
-    minWidth: 150
+    minWidth: 150,
+    chip: (value: string) => {
+      return (
+        <>
+          {value === 'income' ? (
+            <Chip
+              sx={{ width: 90 }}
+              label="Income"
+              color="success"
+            />
+          ) : (
+            <Chip
+              sx={{ width: 90 }}
+              label="Outcome"
+              color="error"
+            />
+          )}
+        </>
+      )
+    }
   },
   {
     id: 'description',
@@ -57,7 +80,30 @@ const columns: readonly Column[] = [
   {
     id: 'status',
     label: 'Status',
-    minWidth: 150
+    minWidth: 150,
+    chip: (value: string) => {
+      return (
+        <>
+          {value === 'paid' ? (
+            <Chip
+              sx={{ width: 90 }}
+              icon={<MdDone />}
+              label="Paid"
+              color="info"
+              variant="outlined"
+            />
+          ) : (
+            <Chip
+              sx={{ width: 90 }}
+              icon={<FaClock />}
+              label="Pending"
+              color="warning"
+              variant="outlined"
+            />
+          )}
+        </>
+      )
+    }
   },
   {
     id: 'action',
@@ -135,6 +181,8 @@ export default function TransactionTable({
                             ? column.date(value)
                             : typeof value === 'object' && value !== null
                             ? JSON.stringify(value)
+                            : column.chip && typeof value === 'string'
+                            ? column.chip(value)
                             : value}
 
                           {column.id === 'action' && (
