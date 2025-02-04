@@ -1,7 +1,7 @@
-# TransferX
+# Transaction-Log-Frontend
 
 ## 📌 Descrição
-O **EventPlanner** é um SPA com princípios de Clean Arch e SOLID da aplicação de uma transação financeira, com a funcionalidade de registrar ações de um usuário para cada ação feita (CREATE, UPDATE, DELETE), permitindo também, ser visualizado em forma de histórico de ações.
+O **Transaction-Log-Frontend** é um SPA com princípios de Clean Arch e SOLID da aplicação de uma transação financeira, com a funcionalidade de registrar ações de um usuário para cada ação feita (CREATE, UPDATE, DELETE), permitindo também, ser visualizado em forma de histórico de ações.
 
 ## 🚀 Executar Projeto
 - Requisitos:
@@ -28,6 +28,7 @@ npm run dev
 - Axios 🔗
 - Material UI 🎨
 - Styled Components 🎨
+- Moment 📆
 - React Router 🚏
 - Zustand ⚡
 - Jest 📝
